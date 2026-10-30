@@ -119,7 +119,7 @@ class PracticeChecks(unittest.TestCase):
         self.assertEqual(error.exception.code,404)
 
     def test_11_offline_runtimes_exist(self):
-        for path in ['vendor/runtimes/python/pyodide.js','vendor/runtimes/python/pyodide.asm.wasm','vendor/runtimes/python/python_stdlib.zip','vendor/runtimes/sql/sql-wasm.wasm','vendor/runtimes/monaco/vs/loader.js','offline/catalog.js','unified.js','unified.css']:
+        for path in ['vendor/runtimes/python/pyodide.js','vendor/runtimes/python/pyodide.asm.wasm','vendor/runtimes/python/python_stdlib.zip','vendor/runtimes/sql/sql-wasm.wasm','vendor/runtimes/monaco/vs/loader.js','offline/catalog.js','unified.js','unified.css','level-wise.js','guides/DSA_01_Service_Based_Companies.pdf','guides/DSA_02_Mid_Tier_Product_Fintech_Companies.pdf','guides/DSA_03_Top_Tier_Product_Companies.pdf']:
             with urlopen(Request(self.base+'/'+path,method='HEAD')) as response:self.assertEqual(response.status,200,path)
 
     def test_12_studio_inline_scripts_parse(self):

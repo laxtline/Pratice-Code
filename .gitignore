@@ -11,3 +11,6 @@ __pycache__/
 *.merge-tmp
 *.log
 import_sources.json
+build/
+dist/
+.venv/

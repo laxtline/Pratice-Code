@@ -4,6 +4,8 @@ One offline website for learning, coding, practice, assessments and your complet
 
 ## Open it
 
+**Windows app:** download **Pratice-Code-Setup.exe** from [Releases](https://github.com/laxtline/Pratice-Code/releases). Run it, choose an install folder, then open the **Pratice Code** shortcut. The installer includes its own Python runtime and the complete study collection; no separate Python or Node installation is needed. A Windows portable ZIP with the same runtime is also available. Both work without internet after download.
+
 Double-click **Install and Start.cmd** (or **Start Pratice Code.cmd** after the first check). Open **http://127.0.0.1:8787/**. Keep the complete project folder together. Python 3.10+ is required; Node.js, npm and an internet connection are not required. **Stop Pratice Code.cmd** stops the local website.
 
 ## One application
@@ -15,6 +17,7 @@ The home page and the single top menu cover:
 - **Learn:** 30 courses, 145 lessons, worked examples, quizzes, notes and 446 interview answers from the retained curriculum.
 - **Exams:** coding rounds, aptitude/written tests, coding challenges, SQL assessments, cognitive drills, interview prompts and company preparation.
 - **Library:** 4,097 imported question records merged with the older reference collection; additional older topics remain available. All 14,652 preparation files and books are included. Search by title/topic, company, difficulty, file type and progress. Source versions and reference implementations open in the same reader.
+- **Library → Level wise:** three preparation tracks based on the included Service-Based, Product/Fintech/Finance and Top-Tier Product PDF guides. Filter matching questions by topic, difficulty and progress; open the source PDF offline. Questions reuse their existing IDs, notes, solutions and progress across tracks. The guides contain topic priorities and typical examples, not exhaustive or guaranteed company question lists.
 - **Progress:** coding, learning and reference practice in one place, including shared spaced revision and **Back up all progress / Restore progress**.
 
 The main website uses one document and the same editor/learning engines. It does not embed the old websites in a second app frame. Browser history, deep links and a single navigation work across sections.
@@ -47,6 +50,7 @@ Run `python package_offline.py` to build and verify `downloads/Pratice-Code-Offl
 
 - `python -m unittest test_server test_merge -v`: server, judging, wrong-answer/error/timeout behavior, shared saving, backup/restore, duplicate handling, compressed catalog reload, runtime files and inline script parsing.
 - `node --test test_unified.cjs`: combined collection matching, implementation deduplication, preservation of saved status and bookmarks, graded-exercise linking, and reference practice in the shared revision system.
+- The Windows installer is tested in a separate folder using only its bundled runtime, including launching/stopping its executable and submitting a Python practice solution.
 - The home page, editor execution, courses, assessments, library, reference question workspace and deep-link reload are checked through the browser.
 
 ## Sources and notices
@@ -58,3 +62,7 @@ Additional collection notices and source information are listed in [THIRD_PARTY.
 Local code runs with your computer account permissions and execution limits. The server listens only on 127.0.0.1. It is intended for personal use, not public multi-user hosting.
 
 For installation on another computer, follow [INSTALL.md](INSTALL.md). On macOS/Linux run `python3 install.py` or `sh start.sh`. No original Downloads folders or saved browser data are required.
+
+## Build the Windows installer
+
+On Windows, run `python build_windows.py --download-runtime` once, or pass `--runtime-zip` with the official Python 3.14.10 x64 embeddable ZIP. The pinned SHA-256 is verified before packaging. The build uses Microsoft's local .NET Framework C# compiler and writes `downloads/Pratice-Code-Setup.exe`, `Pratice-Code-Windows-Portable.zip` and a checksum. No build tools or downloads are needed by the person installing the finished app. Python's original license is included with its bundled runtime.

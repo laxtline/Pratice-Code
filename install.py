@@ -4,7 +4,7 @@ from pathlib import Path
 
 ROOT=Path(__file__).resolve().parent
 def check():
-    required=['server.py','launch.py','local_tools.py','practice.json','web/index.html','web/unified.js','web/function-worker.js','data/catalog.json','web/studio/vendor/runtimes/python/pyodide.asm.wasm','web/studio/vendor/runtimes/python/python_stdlib.zip','web/studio/vendor/runtimes/sql/sql-wasm.wasm','web/studio/vendor/runtimes/monaco/vs/loader.js']
+    required=['server.py','launch.py','local_tools.py','practice.json','web/index.html','web/unified.js','web/level-wise.js','web/function-worker.js','data/catalog.json','web/studio/vendor/runtimes/python/pyodide.asm.wasm','web/studio/vendor/runtimes/python/python_stdlib.zip','web/studio/vendor/runtimes/sql/sql-wasm.wasm','web/studio/vendor/runtimes/monaco/vs/loader.js','web/guides/DSA_01_Service_Based_Companies.pdf','web/guides/DSA_02_Mid_Tier_Product_Fintech_Companies.pdf','web/guides/DSA_03_Top_Tier_Product_Companies.pdf']
     missing=[name for name in required if not (ROOT/name).is_file()]
     return {'ready':sys.version_info>=(3,10) and not missing,'python':sys.version.split()[0],'minimumPython':'3.10','missingFiles':missing,'nodeRequired':False,'internetRequired':False}
 def main():

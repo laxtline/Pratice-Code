@@ -5,7 +5,7 @@ const vm=require('node:vm');
 function subject(){
  const records=new Map();
  const context={console,Map,Set,Date,JSON,Promise,Cloud:{},RuntimeAssets:{},window:{addEventListener(){}},document:{},OfflineLibrary:{h:v=>String(v)},UI:{openSettings(){}},OfflineAccess:{},SaveBridge:{sync:async()=>{},refreshViews(){}},Learning:{cardInfo:()=>({title:'old'}),reviewOne(){},focus(){}},Store:{get:(k,d)=>records.has(k)?records.get(k):d,set:(k,v)=>records.set(k,v),getRaw:(k,d)=>records.has(k)?records.get(k):d,setRaw:(k,v)=>records.set(k,v)}};
- vm.createContext(context);vm.runInContext(fs.readFileSync(__dirname+'/web/unified.js','utf8')+'\nthis.subject=Unified;',context);return {u:context.subject,context,records};
+ vm.createContext(context);vm.runInContext(fs.readFileSync(__dirname+'/web/level-wise.js','utf8')+'\nthis.levels=LevelWise;',context);vm.runInContext(fs.readFileSync(__dirname+'/web/unified.js','utf8')+'\nthis.subject=Unified;',context);return {u:context.subject,context,records};
 }
 test('one index merges numbered references, legacy sources and equivalent judged exercises',()=>{
  const {u}=subject();const p={id:'lc-two-sum',number:'1',title:'Two Sum',topics:['Array'],companies:{},kind:'reference'};
@@ -32,4 +32,12 @@ test('browser function worker checks solutions without Node or a cloud compiler 
  assert.equal(result.accepted,true);assert.equal(result.cases.length,2);
  self.onmessage({data:{function:'solve',code:'function solve(){return {0:1,1:2}}',mode:'submit',tests:[{args:[],expected:[1,2]}]}});assert.equal(result.accepted,false);
  self.onmessage({data:{function:'solve',code:'function solve(){throw new Error("example")}',mode:'custom',tests:[{args:[]}]}});assert.equal(result.verdict,'Runtime error');
+});
+test('PDF levels retain one shared question identity, apply topic and difficulty priorities, and exclude unrelated subjects',()=>{
+ const {context}=subject();const make=(id,difficulty,topics,title=id)=>({id,difficulty,topics,title,companies:{},kind:'reference'});
+ const rows=[make('two-sum','Easy',['Array','Hash Table'],'Two Sum'),make('islands','Medium',['Array','Graph','Depth-First Search']),make('word-break','Medium',['Dynamic Programming','String']),make('trie','Hard',['Trie']),make('sql','Easy',['Database']),make('factorial','Easy',['Math'],'Factorial'),make('cache','Medium',['Design'],'LRU Cache')];
+ const index=context.levels.build(rows);assert.ok(index.get('service').some(p=>p.id==='factorial'));assert.ok(index.get('service').some(p=>p.id==='two-sum'));assert.ok(!index.get('service').some(p=>p.id==='islands'));assert.ok(index.get('product').some(p=>p.id==='islands'));assert.ok(index.get('top').some(p=>p.id==='trie'));assert.ok(index.get('top').some(p=>p.id==='cache'));for(const level of index.values()){assert.ok(!level.some(p=>p.id==='sql'));assert.equal(new Set(level.map(p=>p.id)).size,level.length);}
+});
+test('level topic, text and shared solved-progress filters combine correctly',()=>{
+ const {u,context}=subject();u.items=[{id:'lc-two-sum',number:'1',title:'Two Sum',topics:['Array','Hash Table'],companies:{},kind:'reference',difficulty:'Easy'},{id:'lc-palindrome',number:'9',title:'Palindrome Number',topics:['Math'],companies:{},kind:'reference',difficulty:'Easy'}];u.levelIndex=context.levels.build(u.items);u.scope='levels';u.levelId='service';u.levelTopic='hashing';assert.equal(u.filtered().length,1);u.setState('lc-two-sum',{status:'solved',star:true});u.filters.status='solved';assert.equal(u.filtered()[0].id,'lc-two-sum');u.filters.q='prefix';assert.equal(u.filtered().length,0);u.filters.q='';u.levelTopic='core';assert.equal(u.filtered().length,0);assert.equal(u.state(u.items[0]).star,true);
 });

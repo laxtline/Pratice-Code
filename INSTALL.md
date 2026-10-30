@@ -1,5 +1,15 @@
 # Install Pratice Code
 
+## Windows installer (recommended)
+
+Download **Pratice-Code-Setup.exe** from the [GitHub Releases page](https://github.com/laxtline/Pratice-Code/releases), run it and choose a dedicated install folder. The default is `%LOCALAPPDATA%\Programs\PraticeCode`. Setup can create Desktop and Start menu shortcuts. Open **Pratice Code** to start; the **Stop Pratice Code** Start menu shortcut stops the local server. Your browser displays the same offline study website at `http://127.0.0.1:8787/`.
+
+This Windows x64 edition includes Python and all application content. Installation and ordinary use need no internet, Python setup, Node.js or administrator access. Windows 10/11 with its .NET Framework support is required. C/C++ and Java still use an optional local compiler/JDK.
+
+For a portable Windows copy, extract **Pratice-Code-Windows-Portable.zip** and open **Pratice Code.exe**. Keep the extracted folder together. Personal notes, credentials and progress are not included in distributed packages. Before updating an installed copy, close its server; retain `studio-private/` and export your progress through the app.
+
+## Source ZIP / macOS / Linux
+
 1. Install Python **3.10 or newer** once. No Node.js, npm, account or paid service is required.
 2. Download the repository ZIP or the full offline ZIP and **extract the complete folder**.
 3. On Windows, double-click **Install and Start.cmd**. On macOS/Linux, run `python3 install.py` from that folder, or `sh start.sh`.
