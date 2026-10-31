@@ -38,4 +38,4 @@ The repository mirrors the collected local project. Personal progress, private b
 
 ## GitHub Packages
 
-`Pratice.Code.Windows` packages the same verified Windows installer under `tools/Pratice-Code-Setup.exe` in the NuGet format supported by GitHub Packages. The direct EXE download is available in Releases. The publishing workflow verifies its SHA-256 before packaging.
+`com.github.laxtline:pratice-code-windows:1.2.0` publishes the same verified Windows installer as an `.exe` artifact in the Maven format supported by GitHub Packages. The package follows this public repository's permissions. The direct EXE download is also available in Releases. The publishing workflow verifies its SHA-256 before publishing.
