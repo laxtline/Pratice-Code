@@ -1,7 +1,5 @@
 name: Publish Windows installer package
 on:
-  release:
-    types: [published]
   workflow_dispatch:
 permissions:
   contents: read
@@ -12,25 +10,24 @@ jobs:
     steps:
       - uses: actions/checkout@v6
         with:
-          sparse-checkout: packages
+          sparse-checkout: |
+            packages
+            Installer
       - uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: temurin
-      - name: Download verified release installer
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Download and verify the repository installer
         run: |
-          mkdir -p packages/assets
-          gh release download v1.2.0 --repo "$GITHUB_REPOSITORY" --pattern Pratice-Code-Setup.exe --dir packages/assets
-          echo "0ffb04102dffce292ad6c2a48f344ee23a372f542308878ed84f447184ec3d65  packages/assets/Pratice-Code-Setup.exe" | sha256sum --check
+          git lfs pull --include="Installer/Pratice-Code-Setup.exe" --exclude=""
+          echo "0ffb04102dffce292ad6c2a48f344ee23a372f542308878ed84f447184ec3d65  Installer/Pratice-Code-Setup.exe" | sha256sum --check
       - name: Publish to GitHub Packages
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: >-
           mvn --batch-mode org.apache.maven.plugins:maven-deploy-plugin:3.2.0:deploy-file
           -DpomFile=packages/pom.xml
-          -Dfile=packages/assets/Pratice-Code-Setup.exe
+          -Dfile=Installer/Pratice-Code-Setup.exe
           -DrepositoryId=github
           -Durl=https://maven.pkg.github.com/${{ github.repository }}
           -DretryFailedDeploymentCount=2
