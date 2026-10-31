@@ -1,0 +1,2 @@
+0ffb04102dffce292ad6c2a48f344ee23a372f542308878ed84f447184ec3d65  Pratice-Code-Setup.exe
+f0d0b79db2ca37a5826c9f84d63b78118efdda600c698f7f555619253a91bd40  Pratice-Code-Offline.zip

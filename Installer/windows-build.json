@@ -1,0 +1,13 @@
+{
+  "files": 19507,
+  "sizeMiB": 367.58,
+  "verified": true,
+  "installer": "Pratice-Code-Setup.exe",
+  "installerMiB": 367.61,
+  "sha256": "0ffb04102dffce292ad6c2a48f344ee23a372f542308878ed84f447184ec3d65",
+  "runtime": "Python 3.14.10 x64",
+  "desktopRuntime": "156.0.4314.56",
+  "standaloneWindow": true,
+  "version": "1.2.0",
+  "portableAppFolder": "../App"
+}

@@ -1,0 +1,28 @@
+name: Publish Windows installer package
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+permissions:
+  contents: read
+  packages: write
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          sparse-checkout: packages
+      - name: Download verified release installer
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          mkdir -p packages/assets
+          gh release download v1.2.0 --repo "$GITHUB_REPOSITORY" --pattern Pratice-Code-Setup.exe --dir packages/assets
+          echo "0ffb04102dffce292ad6c2a48f344ee23a372f542308878ed84f447184ec3d65  packages/assets/Pratice-Code-Setup.exe" | sha256sum --check
+      - name: Create NuGet package
+        run: dotnet pack packages/Pratice.Code.Windows.csproj --configuration Release --output .nuget-output
+      - name: Publish to GitHub Packages
+        env:
+          PACKAGE_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: dotnet nuget push .nuget-output/*.nupkg --api-key "$PACKAGE_TOKEN" --source "https://nuget.pkg.github.com/${{ github.repository_owner }}/index.json" --skip-duplicate

@@ -1,0 +1,4 @@
+* -text
+"Installer/Pratice-Code-Setup.exe" filter=lfs diff=lfs merge=lfs -text
+"Publish/Pratice-Code-Offline.zip" filter=lfs diff=lfs merge=lfs -text
+"App/desktop-runtime/msedge.dll" filter=lfs diff=lfs merge=lfs -text
